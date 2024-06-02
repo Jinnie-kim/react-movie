@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [movieId, setMovieId] = useState(undefined);
+
+  const selectMovie = (id) => {
+    setMovieId(id);
+  };
 
   useEffect(() => {
     fetch('https://nomad-movies.nomadcoders.workers.dev/movies')
@@ -23,7 +28,7 @@ function App() {
           <ul>
             {movies.map((movie) => (
               <li key={movie.id} id={movie.id}>
-                <button>{movie.title}</button>
+                <button onClick={() => selectMovie(movie.id)}>{movie.title}</button>
               </li>
             ))}
             <li>
@@ -32,9 +37,15 @@ function App() {
           </ul>
         </section>
         <section>
-          <h2></h2>
-          <img src="" alt="" />
-          <p></p>
+          {movieId ? (
+            <>
+              <h2></h2>
+              <img src="" alt="" />
+              <p></p>
+            </>
+          ) : (
+            'Please click a movie button'
+          )}
         </section>
       </main>
       <footer>api credit: Nomad Coder</footer>
